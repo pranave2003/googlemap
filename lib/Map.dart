@@ -2,40 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-// Main widget for displaying Google Map
-class GoogleMapFlutter extends StatefulWidget {
-  const GoogleMapFlutter({super.key});
+class Mapflutter extends StatefulWidget {
+  const Mapflutter({super.key});
 
   @override
-  State<GoogleMapFlutter> createState() => _GoogleMapFlutterState();
+  State<Mapflutter> createState() => _MapflutterState();
 }
 
-class _GoogleMapFlutterState extends State<GoogleMapFlutter> {
-  // Initial location for the map's camera position (latitude and longitude)
-  LatLng myCurrentLocation = const LatLng(27.7172, 85.3240);
-  // LatLng myCurrentLocation = const LatLng(28.578382, 81.63359);
-
-  late GoogleMapController googleMapController;
+class _MapflutterState extends State<Mapflutter> {
+  LatLng mucurrentlocation = const LatLng(27.7172, 85.3240);
   Set<Marker> markers = {};
+  late GoogleMapController googleMapController;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        myLocationButtonEnabled: false,
-
-        markers: markers,
-        // Setting the controller when the map is created
-        onMapCreated: (GoogleMapController controller) {
-          googleMapController = controller;
-        },
-        // Initial camera position of the map
-        initialCameraPosition: CameraPosition(
-          target: myCurrentLocation,
-          zoom: 14,
+      appBar: AppBar(
+        title: Text(
+          "Flutter Google Map",
+          style: TextStyle(
+              color: Colors.blue, fontSize: 30, fontWeight: FontWeight.w900),
         ),
       ),
-      // Floating action button to get user's current location
+      body: GoogleMap(
+          onMapCreated: (GoogleMapController controller) {
+            googleMapController = controller;
+          },
+          markers: markers,
+          initialCameraPosition:
+              CameraPosition(target: mucurrentlocation, zoom: 14)),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         child: const Icon(
@@ -73,7 +68,6 @@ class _GoogleMapFlutterState extends State<GoogleMapFlutter> {
     );
   }
 
-  // Function to determine the user's current position
   Future<Position> currentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
